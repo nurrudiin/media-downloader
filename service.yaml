@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: media-downloader
+spec:
+  selector:
+    app: media-downloader
+
+  ports:
+    - name: novnc
+      port: 6080
+      targetPort: 6080
+      nodePort: 30080
+
+  type: NodePort
