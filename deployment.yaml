@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: media-downloader
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: media-downloader
+
+  template:
+    metadata:
+      labels:
+        app: media-downloader
+
+    spec:
+      containers:
+        - name: media-downloader
+          image: YOUR_DOCKERHUB_USERNAME/media-downloader:5.6.6
+          imagePullPolicy: Always
+
+          ports:
+            - name: novnc
+              containerPort: 6080
+
+          volumeMounts:
+            - name: downloads
+              mountPath: /downloads
+
+          resources:
+            requests:
+              cpu: 200m
+              memory: 512Mi
+            limits:
+              cpu: "1"
+              memory: 2Gi
+
+          readinessProbe:
+            tcpSocket:
+              port: 6080
+            initialDelaySeconds: 10
+            periodSeconds: 10
+
+          livenessProbe:
+            tcpSocket:
+              port: 6080
+            initialDelaySeconds: 30
+            periodSeconds: 20
+
+      volumes:
+        - name: downloads
+          emptyDir: {}
