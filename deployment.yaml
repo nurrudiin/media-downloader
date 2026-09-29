@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: media-downloader
-          image: YOUR_DOCKERHUB_USERNAME/media-downloader:5.6.6
+          image: nurrudiin/media-downloader:5.6.6
           imagePullPolicy: Always
 
           ports:
